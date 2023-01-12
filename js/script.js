@@ -3,10 +3,16 @@ const loadingElement = document.querySelector("#loading");
 const postsContainer = document.querySelector(".container-total-posts div");
 const url = "https://jsonplaceholder.typicode.com/posts";
 
-//elemetos da página post.html
+//elementos da página post.html
 const post = document.querySelector("#post");
 const postContainer = document.querySelector(".post-container div");
 const commentsContainer = document.querySelector(".comments-container");
+
+//elementos do form para adicionar comentários ao post.
+const commentForm = document.querySelector("#comment-form");
+const inputEmail = document.querySelector("#email");
+const textAreaBody = document.querySelector("#body");
+const btnForm = document.querySelector("#btn-form");
 
 //pegando ID de cada post individualmente quando entrar na página post.html
 const urlSearchParams = new URLSearchParams(window.location.search);
@@ -46,6 +52,9 @@ class Requests {
         this.url = url;
         this.post = post;
         this.postContainer = postContainer;
+        this.commentsContainer = commentsContainer;
+        this.inputEmail = inputEmail;
+        this.textAreaBody = textAreaBody;
     }
 
     //método para RESGATAR (requisição GET)todos os posts da api e disponibilizar no body do html.
@@ -88,13 +97,69 @@ class Requests {
 
         this.postContainer.appendChild(div);
 
+        //Adicionando os comentários do post selecionado.
+        dataComment.map((comment) => {
+            
+            const commentEmail = comment.email;
+            const commentBody = comment.body;
+
+            const email = document.createElement("h3");
+            const body = document.createElement("p");
+
+            email.innerText = commentEmail;
+            body.innerText = commentBody;
+
+            this.commentsContainer.appendChild(email);
+            this.commentsContainer.appendChild(body);
+
+        })
     }
+
+    async postNewComment(id){
+
+        let comment = {
+            email: this.inputEmail.value,
+            body: this.textAreaBody.value
+        }
+
+        comment = JSON.stringify(comment);
+
+        const response = await fetch(`${this.url}/${id}/comments`, {
+            method: 'POST',
+            body: comment,
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8'
+            }
+        });
+
+        const data = await response.json();
+
+        const email = document.createElement("h3");
+        const body = document.createElement("p");
+
+        email.innerText = data.email;
+        body.innerText = data.body;
+
+        this.commentsContainer.appendChild(email);
+        this.commentsContainer.appendChild(body);
+                
+    }
+
+
 }
 
-const responseRequest = new Requests(loadingElement, postsContainer, url, post, postContainer);
+const responseRequest = new Requests(loadingElement, postsContainer, url, post, postContainer, commentsContainer, inputEmail, textAreaBody);
 
 if(!postId){
     responseRequest.getAllPosts();
 }else{
     responseRequest.getIndividualPost(postId);
+
+    //adicionar comentários ao blog.
+    btnForm.addEventListener("click", (e) => {
+
+        e.preventDefault();
+        responseRequest.postNewComment(postId);
+
+    })
 }

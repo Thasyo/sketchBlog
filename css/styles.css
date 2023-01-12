@@ -136,3 +136,11 @@ a:hover, input[type="submit"]{
 textarea{
     margin-bottom: 15px;
 }
+
+.comments-container{
+    margin: 20px 0px;
+}
+
+.comments-container h3{
+    padding: 10px 0px;
+}
