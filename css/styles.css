@@ -30,8 +30,9 @@ body{
 
 .container-total-posts div{
     background-color: #f7cfcfb5;
-    box-shadow: 0px 0px 2px 10px #f7cfcfb5;
+    box-shadow: 0px 0px 2px 10px #f7cfcf;
     border-radius: 10px;
+    margin-bottom: 20px;
 }
 
 .container-total-posts div div h2{
@@ -88,4 +89,50 @@ a:hover, input[type="submit"]{
 
     font-size: 1.8em;
     text-shadow: 1px 1px 10px #5cb5d6;
+}
+
+.post-container div div{
+
+    margin-top: 30px;
+    margin-bottom: 15px;
+    background-color: #f7cfcf;
+    box-shadow: 0px 0px 2px 5px #f7cfcf;
+    border-radius: 10px;
+
+}
+
+.post-container div div h1{
+    font-size: 1.5em;
+}
+
+.post-container div div p{
+    padding: 8px;
+}
+
+#post h2{
+    font-size: 2em;
+    font-weight: 800;
+    margin: 10px 0px;
+}
+
+#comment-form div{
+    display: flex;
+    flex-direction: column;
+}
+
+#comment-form div label{
+    font-weight: 600;
+    font-size: 18px;
+}
+
+#comment-form div input, textarea{
+    width: 300px;
+    border: none;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 5px 0px;
+}
+
+textarea{
+    margin-bottom: 15px;
 }
